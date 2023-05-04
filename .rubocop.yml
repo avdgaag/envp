@@ -3,6 +3,9 @@ AllCops:
   SuggestExtensions: false
   NewCops: enable
 
+Style/Documentation:
+  Enabled: false
+
 Style/StringLiterals:
   Enabled: true
   EnforcedStyle: double_quotes
@@ -13,3 +16,10 @@ Style/StringLiteralsInInterpolation:
 
 Layout/LineLength:
   Max: 120
+
+Metrics/MethodLength:
+  Max: 12
+
+Metrics/ClassLength:
+  Exclude:
+    - test/**/test_*.rb
