@@ -6,9 +6,14 @@ require_relative "../result"
 
 module EnvParser
   module Vars
+    # A `Var` that is coerced using available transformations in the given
+    # coercions registry.
     class Coerced < DelegateClass(Base)
-      def initialize(name, target, coercions)
-        super(name)
+      # @param name [Base]
+      # @param target [Object]
+      # @param coercions [EnvParser::Coercions::Registry]
+      def initialize(var, target, coercions)
+        super(var)
         @target = target
         @coercions = coercions
       end

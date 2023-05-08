@@ -6,6 +6,7 @@ require_relative "../result"
 
 module EnvParser
   module Vars
+    # A `Var` that fails when the fetched value is not present.
     class Required < DelegateClass(Base)
       def from(env)
         Result.then(__getobj__.from(env)) do |value|

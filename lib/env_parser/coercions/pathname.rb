@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "pathname"
+require_relative "registry"
 
 module EnvParser
   module Coercions

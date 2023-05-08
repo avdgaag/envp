@@ -6,9 +6,11 @@ require_relative "../result"
 
 module EnvParser
   module Vars
+    # A `Var` that is read and than has a block applied to it, returning the
+    # block return value.
     class Block < DelegateClass(Base)
-      def initialize(name, block)
-        super(name)
+      def initialize(var, &block)
+        super(var)
         @block = block
       end
 

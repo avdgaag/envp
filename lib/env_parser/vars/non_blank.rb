@@ -6,10 +6,11 @@ require_relative "../result"
 
 module EnvParser
   module Vars
+    # A `Var` that fails when the fetched value is empty.
     class NonBlank < DelegateClass(Base)
       def from(env)
         Result.then(__getobj__.from(env)) do |value|
-          if value.empty?
+          if value.nil? || value.strip.empty?
             Result.error("disallowed blank value")
           else
             Result.ok(value)

@@ -6,4 +6,7 @@ module EnvParser
 
   class Failure < Error
   end
+
+  class UnknownCoercion < Error
+  end
 end
