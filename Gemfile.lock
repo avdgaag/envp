@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    env_parser (0.1.0)
+    envp (0.1.0)
 
 GEM
   remote: https://rubygems.org/
@@ -35,7 +35,7 @@ PLATFORMS
   arm64-darwin-22
 
 DEPENDENCIES
-  env_parser!
+  envp!
   minitest (~> 5.0)
   rake (~> 13.0)
   rubocop (~> 1.21)

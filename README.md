@@ -1,4 +1,4 @@
-# EnvParser
+# Envp
 
 A Ruby gem for working with environment variables much like OptionParser does with command-line arguments.
 
@@ -6,24 +6,24 @@ A Ruby gem for working with environment variables much like OptionParser does wi
 
 Install the gem and add to the application's Gemfile by executing:
 
-    $ bundle add env_parser
+    $ bundle add envp
 
 If bundler is not being used to manage dependencies, install the gem by executing:
 
-    $ gem install env_parser
+    $ gem install envp
 
 ## Usage
 
-`EnvParser` allows you to write expectations for environment variables for your program.
+`Envp` allows you to write expectations for environment variables for your program.
 
 ### Simple example
 
 Define a program in a new file `app.rb`:
 
 ``` ruby
-reqiure 'env_parser'
+reqiure 'envp'
 
-pp EnvParser.parse do |e|
+pp Envp.parse do |e|
   e.required("FOO")
 end
 ```
@@ -32,7 +32,7 @@ Run the program without any special environment variables:
 
 ``` sh
 $ ruby app.rb
-app.rb:47:in `handle_errors': FOO: missing required value (EnvParser::Failure)
+app.rb:47:in `handle_errors': FOO: missing required value (Envp::Failure)
   from app.rb:26:in `parse'
   from -e:1:in `<main>'
 ```
@@ -53,9 +53,9 @@ The specified environment variables are parsed into a Ruby hash for use in your 
 Environment variables can be coerced from string values into richer types. For example, to parse a value into an integer:
 
 ``` ruby
-reqiure 'env_parser'
+reqiure 'envp'
 
-pp EnvParser.parse do |e|
+pp Envp.parse do |e|
   e.required("FOO", Integer)
 end
 ```
@@ -70,9 +70,9 @@ $ FOO=123 ruby app.rb
 Along with various predefined coercions, you can define your own coercions:
 
 ``` ruby
-reqiure 'env_parser'
+reqiure 'envp'
 
-pp EnvParser.parse do |e|
+pp Envp.parse do |e|
   e.accept(User) do |id|
     User.find(id)
   end
@@ -85,7 +85,7 @@ end
 The following example demonstrates all features:
 
 ``` ruby
-EnvParser.parse(constants: true, symbolize: true, normalize: true) do |e|
+Envp.parse(constants: true, symbolize: true, normalize: true) do |e|
   e.accept(User) do |id|
     User.find(id)
   end
@@ -96,8 +96,8 @@ EnvParser.parse(constants: true, symbolize: true, normalize: true) do |e|
   e.optional("DEBUG", :bool, default: false)
 end
 # => {:user_id=>#<User...>, :api_key=>"abc123", :debug=>false}
-EnvParser::DEBUG # => false
-EnvParser::API_KEY # => "abc123"
+Envp::DEBUG # => false
+Envp::API_KEY # => "abc123"
 ```
 
 ## Development
@@ -108,7 +108,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/avdgaag/env_parser. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/avdgaag/env_parser/blob/main/CODE_OF_CONDUCT.md).
+Bug reports and pull requests are welcome on GitHub at https://github.com/avdgaag/envp. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/avdgaag/envp/blob/main/CODE_OF_CONDUCT.md).
 
 ## License
 
@@ -116,4 +116,4 @@ The gem is available as open source under the terms of the [MIT License](https:/
 
 ## Code of Conduct
 
-Everyone interacting in the EnvParser project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/avdgaag/env_parser/blob/main/CODE_OF_CONDUCT.md).
+Everyone interacting in the Envp project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/avdgaag/envp/blob/main/CODE_OF_CONDUCT.md).
