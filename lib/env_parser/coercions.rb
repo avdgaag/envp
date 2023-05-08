@@ -20,6 +20,7 @@ module EnvParser
   # * `URI`
   # * `:bool`
   # * `JSON`
+  # * `Symbol`
   #
   # These coercions might require standard libraries. You can load exactly
   # those you require or load all of them at once:
