@@ -1,24 +1,104 @@
 # EnvParser
 
-TODO: Delete this and the text below, and describe your gem
-
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/env_parser`. To experiment with that code, run `bin/console` for an interactive prompt.
+A Ruby gem for working with environment variables much like OptionParser does with command-line arguments.
 
 ## Installation
 
-TODO: Replace `UPDATE_WITH_YOUR_GEM_NAME_PRIOR_TO_RELEASE_TO_RUBYGEMS_ORG` with your gem name right after releasing it to RubyGems.org. Please do not do it earlier due to security reasons. Alternatively, replace this section with instructions to install your gem from git if you don't plan to release to RubyGems.org.
-
 Install the gem and add to the application's Gemfile by executing:
 
-    $ bundle add UPDATE_WITH_YOUR_GEM_NAME_PRIOR_TO_RELEASE_TO_RUBYGEMS_ORG
+    $ bundle add env_parser
 
 If bundler is not being used to manage dependencies, install the gem by executing:
 
-    $ gem install UPDATE_WITH_YOUR_GEM_NAME_PRIOR_TO_RELEASE_TO_RUBYGEMS_ORG
+    $ gem install env_parser
 
 ## Usage
 
-TODO: Write usage instructions here
+`EnvParser` allows you to write expectations for environment variables for your program.
+
+### Simple example
+
+Define a program in a new file `app.rb`:
+
+``` ruby
+reqiure 'env_parser'
+
+pp EnvParser.parse do |e|
+  e.required("FOO")
+end
+```
+
+Run the program without any special environment variables:
+
+``` sh
+$ ruby app.rb
+app.rb:47:in `handle_errors': FOO: missing required value (EnvParser::Failure)
+  from app.rb:26:in `parse'
+  from -e:1:in `<main>'
+```
+
+Rather then let the program continue with missing required values, an exception is raised immediately.
+
+Run the program with the required environment variables:
+
+``` sh
+$ FOO=bar ruby app.rb
+{"FOO"=>"bar"}
+```
+
+The specified environment variables are parsed into a Ruby hash for use in your program.
+
+### Coercions
+
+Environment variables can be coerced from string values into richer types. For example, to parse a value into an integer:
+
+``` ruby
+reqiure 'env_parser'
+
+pp EnvParser.parse do |e|
+  e.required("FOO", Integer)
+end
+```
+
+Will result in:
+
+``` sh
+$ FOO=123 ruby app.rb
+{"FOO"=>123}
+```
+
+Along with various predefined coercions, you can define your own coercions:
+
+``` ruby
+reqiure 'env_parser'
+
+pp EnvParser.parse do |e|
+  e.accept(User) do |id|
+    User.find(id)
+  end
+  e.required("USER_ID", User)
+end
+```
+
+### Full example
+
+The following example demonstrates all features:
+
+``` ruby
+EnvParser.parse(constants: true, symbolize: true, normalize: true) do |e|
+  e.accept(User) do |id|
+    User.find(id)
+  end
+  e.required("USER_ID", User)
+  e.required("API_KEY", allow_blank: false) do |value|
+    DEFAULT_LOGGER.debug("using API_KEY #{value}")
+  end
+  e.optional("DEBUG", :bool, default: false)
+end
+# => {:user_id=>#<User...>, :api_key=>"abc123", :debug=>false}
+EnvParser::DEBUG # => false
+EnvParser::API_KEY # => "abc123"
+```
 
 ## Development
 
