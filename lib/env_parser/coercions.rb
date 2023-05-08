@@ -18,6 +18,7 @@ module EnvParser
   # * `Regexp`
   # * `String`
   # * `URI`
+  # * `:bool`
   #
   # These coercions might require standard libraries. You can load exactly
   # those you require or load all of them at once:
